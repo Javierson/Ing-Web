@@ -34,8 +34,7 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('guest');
     }
 
@@ -45,10 +44,13 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
+    protected function validator(array $data) {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'ap' => 'required|string|max:255',
+            'am' => 'required|string|max:255',
+            'fn' => 'required|string|max:255',
+            'cp' => 'string|max:5',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -60,10 +62,13 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
-    {
+    protected function create(array $data) {
         return User::create([
             'name' => $data['name'],
+            'apellido_paterno' => $data['ap'],
+            'apellido_materno' => $data['am'],
+            'fecha_de_nacimiento' => $data['fn'],
+            'codigo_postal' => $data['cp'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
